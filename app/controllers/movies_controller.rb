@@ -7,7 +7,18 @@ class MoviesController < ApplicationController
   end
 
   def index
+    if params[:sort].nil?
     @movies = Movie.all
+    elsif params[:sort].to_s == "title" or params[:sort].to_s  == "release_date"
+       @sorted_by = params[:sort]
+      logger.info "params :sort value is: " + params[:sort] + " ASC"
+      @movies = Movie.order(params[:sort] + " ASC")
+      logger.fatal "No movies!" unless @movies.count >= 1
+    else
+      logger.warn "Cannot Sort by: " + params[:sort]
+      @movies = Movie.all
+     end
+
   end
 
   def new
