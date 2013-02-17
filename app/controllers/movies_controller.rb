@@ -7,11 +7,21 @@ class MoviesController < ApplicationController
   end
 
   def index
+
     @all_ratings = Movie.all_ratings
+
+    if params[:ratings].nil?
+      @movies = Movie.find(:all)
+ else
+      @movies = Movie.where("rating = ?", params[:ratings].keys)
+      end
+
+
 
 
     if params[:sort].nil?
-    @movies = Movie.all
+      @movies
+
     elsif params[:sort].to_s == "title" or params[:sort].to_s  == "release_date"
        @sorted_by = params[:sort]
       logger.info "params :sort value is: " + params[:sort] + " ASC"
