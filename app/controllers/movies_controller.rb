@@ -29,7 +29,12 @@ class MoviesController < ApplicationController
     elsif params[:sort].to_s == "title" or params[:sort].to_s  == "release_date"
        @sorted_by = params[:sort]
       logger.info "params :sort value is: " + params[:sort] + " ASC"
-      @movies = Movie.order(params[:sort] + " ASC")
+      if( params[:sort] == 'title')
+        @movies = @movies.sort_by{|movie| movie.title}
+        elsif (params[:sort] == 'release_date')
+        @movies = @movies.sort_by{|movie| movie.release_date}
+        end
+
       logger.fatal "No movies!" unless @movies.count >= 1
     else
       logger.warn "Cannot Sort by: " + params[:sort]
