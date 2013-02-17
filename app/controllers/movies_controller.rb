@@ -10,10 +10,14 @@ class MoviesController < ApplicationController
 
     @all_ratings = Movie.all_ratings
 
+
     if params[:ratings].nil?
       @movies = Movie.find(:all)
- else
-      @movies = Movie.where("rating = ?", params[:ratings].keys)
+      @selected_boxes = params[:ratings]
+
+    else
+      @movies = Movie.find(:all, :conditions => {
+                             :rating => params[:ratings].keys})
       end
 
 
