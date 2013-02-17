@@ -13,9 +13,9 @@ class MoviesController < ApplicationController
 
     if params[:ratings].nil?
       @movies = Movie.find(:all)
-      @selected_boxes = params[:ratings]
-
+      @selected_boxes = @all_ratings
     else
+      @selected_boxes = params[:ratings].keys
       @movies = Movie.find(:all, :conditions => {
                              :rating => params[:ratings].keys})
       end
